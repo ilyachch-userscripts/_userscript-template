@@ -20,12 +20,15 @@ fi
 echo "Enter the name of your userscript project:"
 read PROJECT_NAME
 
-# try to create the GitHub repository. If it already exists, exit with an error.
-gh repo create ilyachch-userscripts/$PROJECT_NAME --public --clone --add-readme --disable-wiki --license MIT || { echo "Repository creation failed. It may already exist."; exit 1; }
+PROJECT_SLUG=$(echo "$PROJECT_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
 
-cookiecutter _userscript-template/ --no-input project_name="$PROJECT_NAME"
+echo "Creating GitHub repository 'ilyachch-userscripts/$PROJECT_SLUG'..."
 
-cd "$PROJECT_NAME"
+gh repo create ilyachch-userscripts/$PROJECT_SLUG --public --clone --add-readme --disable-wiki --license MIT || { echo "Repository creation failed. It may already exist."; exit 1; }
+
+cookiecutter -f _userscript-template/ --no-input project_name="$PROJECT_NAME"
+
+cd "$PROJECT_SLUG"
 
 git commit -am "Initial commit - Created userscript project $PROJECT_NAME"
 
