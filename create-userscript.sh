@@ -20,7 +20,8 @@ fi
 echo "Enter the name of your userscript project:"
 read PROJECT_NAME
 
-gh repo create ilyachch-userscripts/$PROJECT_NAME --public --clone --add-readme --disable-wiki --license MIT
+# try to create the GitHub repository. If it already exists, exit with an error.
+gh repo create ilyachch-userscripts/$PROJECT_NAME --public --clone --add-readme --disable-wiki --license MIT || { echo "Repository creation failed. It may already exist."; exit 1; }
 
 cookiecutter _userscript-template/ --no-input project_name="$PROJECT_NAME"
 
