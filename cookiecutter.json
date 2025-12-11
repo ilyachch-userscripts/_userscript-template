@@ -1,0 +1,9 @@
+{
+  "project_name": "My Userscript",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
+  "description": "Custom Script - {{ cookiecutter.project_name }}",
+  "author": "ilyachch",
+  "version": "1.0",
+  "github_username": "ilyachch-userscripts",
+  "license": "MIT"
+}

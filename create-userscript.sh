@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ ! -d "_userscript-template" ]; then
+    echo "This script must be run from the directory containing _userscript-template"
+    exit 1
+fi
+
+if ! command -v gh &> /dev/null
+then
+    echo "gh cli could not be found, please install it first."
+    exit
+fi
+
+if ! command -v cookiecutter &> /dev/null
+then
+    echo "cookiecutter could not be found, please install it first."
+    exit
+fi
+
+echo "Enter the name of your userscript project:"
+read PROJECT_NAME
+
+gh repo create ilyachch-userscripts/$PROJECT_NAME --public --clone --add-readme --disable-wiki --license MIT
+
+cookiecutter _userscript-template/ --no-input project_name="$PROJECT_NAME"
+
+cd "$PROJECT_NAME"
+
+git commit -am "Initial commit - Created userscript project $PROJECT_NAME"
+
+echo "Userscript project '$PROJECT_NAME' created and initialized in the 'ilyachch-userscripts' GitHub repository."
